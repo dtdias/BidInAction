@@ -19,7 +19,7 @@ class Janela(QMainWindow):
 
         # Conecta eventos
         self.ui.comboBox.currentTextChanged.connect(self.ao_mudar_uf)
-
+        self.ui.comboBox_2.addItem('Selecione a cidade')
         # Inicia Selenium e monitoramento em paralelo
         threading.Thread(target=self.carregar_opcoes_site, daemon=True).start()
 
@@ -37,16 +37,16 @@ class Janela(QMainWindow):
             self.driver = webdriver.Chrome(options=options)
 
             self.driver.get("https://vitrinedejoias.caixa.gov.br/Paginas/default.aspx")
-            time.sleep(0.3)
+            time.sleep(0.5)
 
             self.driver.find_element(By.PARTIAL_LINK_TEXT, "Buscar joias").click()
-            time.sleep(0.3)
+            time.sleep(0.5)
 
             self.driver.find_element(By.ID, "buscaVitrine").click()
-            time.sleep(0.3)
+            time.sleep(0.5)
 
             self.driver.find_element(By.NAME, "passo").click()
-            time.sleep(0.3)
+            time.sleep(0.5)
 
             select_uf = self.driver.find_element(By.ID, "uf")
             opcoes_uf = [
@@ -97,12 +97,13 @@ class Janela(QMainWindow):
                     print("[INFO] Novas cidades detectadas:", novas_opcoes)
                     self.opcoes_cidade_atuais = novas_opcoes.copy()
 
-                    def atualizar(lista=novas_opcoes):
+                    def atualizar_combo(lista=novas_opcoes):
                         self.ui.comboBox_2.clear()
+                        self.ui.comboBox_2.addItem("Selecione a cidade")
                         self.ui.comboBox_2.addItems(lista)
 
+                    QTimer.singleShot(0, atualizar_combo)
 
-                    QTimer.singleShot(0, atualizar)
 
             except Exception as e:
                 print("Erro ao monitorar cidades:", e)
