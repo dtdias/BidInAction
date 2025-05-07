@@ -19,7 +19,9 @@ class Janela(QMainWindow):
 
         # Conecta eventos
         self.ui.comboBox.currentTextChanged.connect(self.ao_mudar_uf)
-        self.ui.comboBox_2.addItem('Selecione a cidade')
+        self.ui.comboBox_2.addItem('Arqui deverá ser cidade')
+        self.ui.comboBox_4.addItem('Arqui deverá ser datas')
+        self.ui.comboBox_5.addItem('Arqui deverá ser valores')
         # Inicia Selenium e monitoramento em paralelo
         threading.Thread(target=self.carregar_opcoes_site, daemon=True).start()
 
@@ -28,14 +30,13 @@ class Janela(QMainWindow):
         if ufs:
             self.ui.comboBox.addItems(ufs)
 
-        # Inicia monitoramento contínuo das cidades
-        threading.Thread(target=self.monitorar_cidades, daemon=True).start()
 
     def extrair_opcoes_vitrine(self):
         try:
-            options = Options()
-            self.driver = webdriver.Chrome(options=options)
+            options = Options()            
+            options.add_argument("--headless=new") #Oculta o navegador
 
+            self.driver = webdriver.Chrome(options=options)
             self.driver.get("https://vitrinedejoias.caixa.gov.br/Paginas/default.aspx")
             time.sleep(0.5)
 
@@ -79,36 +80,6 @@ class Janela(QMainWindow):
         except Exception as e:
             print("Erro ao selecionar UF:", e)
 
-    def monitorar_cidades(self):
-        while True:
-            try:
-                if not self.driver:
-                    time.sleep(1)
-                    continue
-
-                select_cidade = self.driver.find_element(By.NAME, "cidadeVitrine")
-                novas_opcoes = [
-                    option.text.strip()
-                    for option in select_cidade.find_elements(By.TAG_NAME, "option")
-                    if option.text.strip()
-                ]
-
-                if novas_opcoes and novas_opcoes != self.opcoes_cidade_atuais:
-                    print("[INFO] Novas cidades detectadas:", novas_opcoes)
-                    self.opcoes_cidade_atuais = novas_opcoes.copy()
-
-                    def atualizar_combo(lista=novas_opcoes):
-                        self.ui.comboBox_2.clear()
-                        self.ui.comboBox_2.addItem("Selecione a cidade")
-                        self.ui.comboBox_2.addItems(lista)
-
-                    QTimer.singleShot(0, atualizar_combo)
-
-
-            except Exception as e:
-                print("Erro ao monitorar cidades:", e)
-
-            time.sleep(0.5)  # Verifica a cada 0.5 segundo
 
 if __name__ == "__main__":
     app = QApplication([])
