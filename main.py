@@ -17,7 +17,7 @@ class Janela(QMainWindow):
 
         # --- Cria o driver só uma vez ---
         options = Options()
-        options.add_argument("--headless")  # descomente para rodar sem abrir janela
+        # options.add_argument("--headless")  # descomente para rodar sem abrir janela
         self.driver = webdriver.Chrome(options=options)
         self.driver.get("https://vitrinedejoias.caixa.gov.br/Paginas/default.aspx")
         time.sleep(0.5)
@@ -28,14 +28,15 @@ class Janela(QMainWindow):
         self.driver.find_element(By.NAME, "passo").click()
         time.sleep(0.5)
 
-        self.opcoes_cidade_atuais = []
-
         # Conecta eventos
         self.ui.comboBox.currentTextChanged.connect(self.ao_mudar_uf)
         self.ui.comboBox_2.currentTextChanged.connect(self.ao_mudar_cidade)
         self.ui.comboBox_4.currentTextChanged.connect(self.ao_mudar_periodo)
         self.ui.comboBox_5.currentTextChanged.connect(self.ao_mudar_valor)
+        self.ui.pushButton.clicked.connect(self.ao_clicar_botao)
 
+         # lineEdit
+        # self.ui.pushButton
         # Dispara o carregamento inicial em thread
         threading.Thread(target=self.carregar_opcoes_site, daemon=True).start()
 
@@ -69,6 +70,16 @@ class Janela(QMainWindow):
             for opt in select.find_elements(By.TAG_NAME, "option")
             if opt.text.strip()
         ]
+
+    def ao_clicar_botao(self):
+        text = self.ui.lineEdit.text().strip()
+        if not text:
+            return
+        threading.Thread(
+            target=self.enviar_informacoes,
+            args=(text,),
+            daemon=True
+        ).start()
 
     def ao_mudar_uf(self, uf_texto):
         if not uf_texto:
@@ -105,6 +116,26 @@ class Janela(QMainWindow):
             args=(valor_texto,),
             daemon=True
         ).start()
+
+    def enviar_informacoes(self, text:str):
+        try:
+            # 1) encontra o input
+            elem = self.driver.find_element(By.ID, "loteContrato")
+            # 2) limpa e envia o texto
+            elem.clear()
+            elem.send_keys(text)
+            # 3) dispara os eventos JS para o site “ver” a mudança
+            self.driver.execute_script(
+                "arguments[0].dispatchEvent(new Event('input'));"
+                "arguments[0].dispatchEvent(new Event('change'));",
+                elem
+            )
+            time.sleep(1)
+            self.driver.find_element(By.NAME, "passo").click()
+
+
+        except Exception as e:
+            print("Erro ao escrever no loteContrato:", e) 
 
     def carregar_conteudo_para_uf(self, uf_texto):
         try:
