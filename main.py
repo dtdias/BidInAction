@@ -1,6 +1,10 @@
 from PySide6.QtWidgets import QApplication, QMainWindow
 from PySide6.QtCore import QTimer
 from interface_ui import Ui_interface
+from resultado import Ui_interface as ResultadoUi
+from PySide6.QtWebEngineWidgets import QWebEngineView
+import tempfile, os
+# from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -73,8 +77,8 @@ class Janela(QMainWindow):
 
     def ao_clicar_botao(self):
         text = self.ui.lineEdit.text().strip()
-        if not text:
-            return
+        # if not text:
+            # return
         threading.Thread(
             target=self.enviar_informacoes,
             args=(text,),
@@ -119,20 +123,17 @@ class Janela(QMainWindow):
 
     def enviar_informacoes(self, text:str):
         try:
-            # 1) encontra o input
             elem = self.driver.find_element(By.ID, "loteContrato")
-            # 2) limpa e envia o texto
-            elem.clear()
-            elem.send_keys(text)
-            # 3) dispara os eventos JS para o site “ver” a mudança
-            self.driver.execute_script(
-                "arguments[0].dispatchEvent(new Event('input'));"
-                "arguments[0].dispatchEvent(new Event('change'));",
-                elem
-            )
-            time.sleep(1)
-            self.driver.find_element(By.NAME, "passo").click()
-
+            if text:
+                elem.clear()
+                elem.send_keys(text)            
+                self.driver.execute_script(
+                    "arguments[0].dispatchEvent(new Event('input'));"
+                    "arguments[0].dispatchEvent(new Event('change'));",
+                    elem
+                )
+            time.sleep(0.5)
+            self.driver.find_element(By.ID, "passo2Vitrine").click()
 
         except Exception as e:
             print("Erro ao escrever no loteContrato:", e) 
@@ -196,6 +197,31 @@ class Janela(QMainWindow):
 
         except Exception as e:
             print("Erro ao selecionar VALOR:", e)
+
+    class ResultadoJanela(QMainWindow):
+        def __init__(self, html_content):
+            super().__init__()
+            self.ui = ResultadoUi()
+            self.ui.setupUi(self)
+
+            # Salva HTML temporário
+            temp = tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode="w", encoding="utf-8")
+            temp.write(html_content)
+            temp.close()
+
+            self.ui.webEngineView.load(f"file:///{temp.name.replace(os.sep, '/')}")
+            self.temp_file = temp.name
+
+            self.ui.pushButton.clicked.connect(self.close)       # VOLTAR
+            self.ui.pushButton_2.clicked.connect(self.close)     # SAIR
+
+        def closeEvent(self, event):
+            try:
+                os.remove(self.temp_file)
+            except:
+                pass
+            super().closeEvent(event)
+        
 
 
 if __name__ == "__main__":
