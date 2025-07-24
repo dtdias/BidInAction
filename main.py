@@ -1,17 +1,27 @@
-from PySide6.QtWidgets import QApplication, QMainWindow
-from PySide6.QtCore import QTimer
+import sys
+from PySide6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QWidget)
+from PySide6.QtCore import (Qt, QSize,QMargins )
+from PySide6.QtGui import (QFont)
+
+from components.bit_period import BidPeriod
+from components.pick_up_location import PickUpLocation
+from components.search_filter import SearchFilter
+from components.title import Title
 from interface_ui import Ui_interface
 from resultado import Ui_interface as ResultadoUi
 from PySide6.QtWebEngineWidgets import QWebEngineView
-import tempfile, os
-# from bs4 import BeautifulSoup
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 
+
+import tempfile, os
 import threading
 import time
+
+from services.requester import Requester
 
 class Janela(QMainWindow):
     def __init__(self):
@@ -21,7 +31,7 @@ class Janela(QMainWindow):
 
         # --- Cria o driver só uma vez ---
         options = Options()
-        # options.add_argument("--headless")  # descomente para rodar sem abrir janela
+        options.add_argument("--headless")  # descomente para rodar sem abrir janela
         self.driver = webdriver.Chrome(options=options)
         self.driver.get("https://vitrinedejoias.caixa.gov.br/Paginas/default.aspx")
         time.sleep(0.5)
@@ -33,13 +43,13 @@ class Janela(QMainWindow):
         time.sleep(0.5)
 
         # Conecta eventos
-        self.ui.comboBox.currentTextChanged.connect(self.ao_mudar_uf)
-        self.ui.comboBox_2.currentTextChanged.connect(self.ao_mudar_cidade)
-        self.ui.comboBox_4.currentTextChanged.connect(self.ao_mudar_periodo)
-        self.ui.comboBox_5.currentTextChanged.connect(self.ao_mudar_valor)
-        self.ui.pushButton.clicked.connect(self.ao_clicar_botao)
+        self.ui.ufInput.currentTextChanged.connect(self.ao_mudar_uf)
+        self.ui.cityInput.currentTextChanged.connect(self.ao_mudar_cidade)
+        self.ui.bidPeriodInput.currentTextChanged.connect(self.ao_mudar_periodo)
+        self.ui.valueInput.currentTextChanged.connect(self.ao_mudar_valor)
+        self.ui.submitButton.clicked.connect(self.ao_clicar_botao)
 
-         # lineEdit
+        # lineEdit
         # self.ui.pushButton
         # Dispara o carregamento inicial em thread
         threading.Thread(target=self.carregar_opcoes_site, daemon=True).start()
@@ -52,13 +62,13 @@ class Janela(QMainWindow):
 
 
         if ufs:
-            self.ui.comboBox.addItems(ufs)
+            self.ui.ufInput.addItems(ufs)
         if valores:
-            self.ui.comboBox_5.addItems(valores)
+            self.ui.valueInput.addItems(valores)
         if cidades:
-            self.ui.comboBox_2.addItems(cidades)
+            self.ui.cityInput.addItems(cidades)
         if periodo:
-            self.ui.comboBox_4.addItems(periodo)
+            self.ui.bidPeriodInput.addItems(periodo)
 
     def extrair_opcoes_vitrine(self, tipo):
         # Seleciona o elemento certo de acordo com o tipo
@@ -76,7 +86,7 @@ class Janela(QMainWindow):
         ]
 
     def ao_clicar_botao(self):
-        text = self.ui.lineEdit.text().strip()
+        text = self.ui.searchFilterInput.text().strip()
         # if not text:
             # return
         threading.Thread(
@@ -150,8 +160,8 @@ class Janela(QMainWindow):
             time.sleep(0.5)
             # Após a mudança, recarrega as cidades
             novas = self.extrair_opcoes_vitrine('cidade')
-            self.ui.comboBox_2.clear()
-            self.ui.comboBox_2.addItems(novas)
+            self.ui.cityInput.clear()
+            self.ui.cityInput.addItems(novas)
         except Exception as e:
             print("Erro ao selecionar UF:", e)
 
@@ -170,8 +180,8 @@ class Janela(QMainWindow):
 
             # Reextrai e popula no comboBox_4
             periodos = self.extrair_opcoes_vitrine('periodoBusca')
-            self.ui.comboBox_4.clear()
-            self.ui.comboBox_4.addItems(periodos)
+            self.ui.bidPeriodInput.clear()
+            self.ui.bidPeriodInput.addItems(periodos)
 
         except Exception as e:
             print("Erro ao selecionar CIDADE:", e)
