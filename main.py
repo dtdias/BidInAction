@@ -222,10 +222,87 @@ class Janela(QMainWindow):
                 pass
             super().closeEvent(event)
         
+class SearchWindow(QMainWindow):
+    fontMedium = QFont()
+    fontDefault = QFont()
+    requester = Requester()
+    city_by_uf: dict[str,list[dict]] = dict()
+    bid_period_by_city: dict[str,list[dict]] = dict()
+    
+    
+    def __init__(self):
+        super().__init__()
+ 
+        self.main_view = QWidget()
+        self.main_layout = QVBoxLayout(self.main_view)
+        self.resize(650, 500)
+        self.setMaximumSize(QSize(650, 500))
+        self.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
+        self.setWindowTitle(u"BUSCADOR DE LEIL\u00d5ES DE JOIAS DA CAIXA")
+        self.setCentralWidget(self.main_view)
+        self.initialize_fonts()
+ 
+        self.main_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        self.main_layout.setSpacing(12)
+        self.main_view.setContentsMargins(QMargins(120,40,120,0))
 
+        
+        self.wgTitle = Title(self.main_layout)
+        self.wgTitle._label.setFont(self.fontMedium)
+        
+        self.wgSearchFilter = SearchFilter(self.main_layout)
+        
+        self.wgPickUpLocation = PickUpLocation(self.main_layout)
+        self.wgPickUpLocation._inputUf.addItems(self.requester.request_uf_list())
+        
+        self.wgPickUpLocation._inputUf.currentTextChanged.connect(self.onChangeUf)
+        self.wgPickUpLocation._inputCity.currentTextChanged.connect(self.onChangeCity)
+        
+        self.wgBidPeriod = BidPeriod(self.main_layout)
+        self.wgBidPeriod._label.setFont(self.fontMedium)
+        self.wgBidPeriod._input.currentTextChanged.connect(self.onChangeBitPeriod)
+
+    def onChangeUf(self, uf: str):
+        self.city_by_uf[uf] = self.requester.request_cities_list(uf)
+        self.wgPickUpLocation.reset_inputCity()
+        self.wgBidPeriod.reset_periods()
+        self.wgPickUpLocation._inputCity.addItems(
+            list(map(lambda city: city['nome'], self.city_by_uf[uf]))
+        )
+    
+    def onChangeCity(self, city: str):
+        if not city:
+            return
+        currentUf: str = self.wgPickUpLocation._inputUf.currentText()
+        for city_content in self.city_by_uf[currentUf]:
+            if str.find(city,city_content['nome']):
+                continue
+            name = city_content["nome"]
+            self.bid_period_by_city[name] = self.requester.request_bid_period(city_content['codigo'])
+            self.wgBidPeriod.reset_periods()
+            
+            self.wgBidPeriod._input.addItems(
+                list(map(lambda period: period['periodoDeLance'], self.bid_period_by_city[name]))
+            )
+            
+    def onChangeBitPeriod(self, period: str):
+        if not period:
+            return
+        currentCity: str = self.wgPickUpLocation._inputCity.currentText()
+        for period_content in self.bid_period_by_city[currentCity]:
+            if period == period_content['periodoDeLance']:
+                print(period_content['inicioLance'])
+                
+    
+    def initialize_fonts(self):
+        self.fontMedium.setPointSize(12)        
+        self.fontDefault.setPointSize(10)
+        pass
+    
+    
 
 if __name__ == "__main__":
     app = QApplication([])
-    janela = Janela()
+    janela = SearchWindow()
     janela.show()
-    app.exec()
+    sys.exit(app.exec())
