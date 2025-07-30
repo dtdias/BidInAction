@@ -1,7 +1,4 @@
 from concurrent.futures import ThreadPoolExecutor
-import os
-import sys
-
 from components.bid_details import BidDetails
 from requests import Session
 from models.bid_model import BidModel
@@ -62,15 +59,16 @@ class BidCard(QPushButton):
                 if not pixmap.isNull():
                     self.img_label.setPixmap(pixmap.scaled(160, 120, Qt.AspectRatioMode.KeepAspectRatio))
                 else:
-                    self.img_label.setText("Indisponível")
-                    self.img_label.setFont(QFont("Arial", 10))
-                    self.img_label.setStyleSheet("color: #888;")
+                    self.on_render_image_fail()
             except:
                 self.img_label.setText("Erro na imagem")
         else:
-            self.img_label.setText("Indisponível")
-            self.img_label.setFont(QFont("Arial", 10))
-            self.img_label.setStyleSheet("color: #888;")
+            self.on_render_image_fail()
+            
+    def on_render_image_fail(self):
+        self.img_label.setText("Indisponível")
+        self.img_label.setFont(QFont("Arial", 10))
+        self.img_label.setStyleSheet("color: #888;")
 
 class ResultWindow(QDialog):
     cols = 3
