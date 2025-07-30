@@ -1,6 +1,5 @@
 from threading import Thread
-from tracemalloc import start
-from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QPushButton, QDialog)
+from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QPushButton)
 from PySide6.QtCore import (Qt, QSize,QMargins )
 from PySide6.QtGui import (QFont)
 
@@ -9,7 +8,6 @@ from components.pick_up_location import PickUpLocation
 from components.search_filter import SearchFilter
 from components.title import Title
 from components.values_range import ValuesRange
-from models.bid_period_model import BidPeriodModel
 from models.bid_query_model import BidQueryModel
 from services.request_service import RequesterService
 from services.storage_service import StorageService
@@ -112,7 +110,6 @@ class SearchWindow(QMainWindow):
         result = self.requester.submit_query(query)
         dialog = ResultWindow(result)
         dialog.exec()
-        
     
     def initialize_fonts(self):
         self.fontMedium.setPointSize(12)        
