@@ -1,3 +1,5 @@
+from threading import Thread
+from tracemalloc import start
 from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QPushButton, QDialog)
 from PySide6.QtCore import (Qt, QSize,QMargins )
 from PySide6.QtGui import (QFont)
@@ -50,8 +52,8 @@ class SearchWindow(QMainWindow):
         self.wgPickUpLocation._label.setFont(self.fontMedium)
         self.wgPickUpLocation._inputUf.addItems([x.acronym for x in self.requester.request_uf_list()])
         
-        self.wgPickUpLocation._inputUf.currentTextChanged.connect(self.onChangeUf)
-        self.wgPickUpLocation._inputCity.currentTextChanged.connect(self.onChangeCity)
+        self.wgPickUpLocation._inputUf.currentTextChanged.connect(lambda o: Thread(target=self.onChangeUf,args=(o,)).start())
+        self.wgPickUpLocation._inputCity.currentTextChanged.connect(lambda o: Thread(target=self.onChangeCity, args=(o,)).start())
         
         self.wgBidPeriod = BidPeriod(self.main_layout)
         self.wgBidPeriod._label.setFont(self.fontMedium)
