@@ -1,5 +1,5 @@
 from threading import Thread
-from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QPushButton)
+from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QPushButton, QDialog,QLabel)
 from PySide6.QtCore import (Qt, QSize,QMargins )
 from PySide6.QtGui import (QFont)
 
@@ -92,22 +92,35 @@ class SearchWindow(QMainWindow):
         self.wgBidPeriod._input.addItems(list(periods[city_name].keys()))
                 
     def onSubmitQuery(self):
+        def warn_issue(issue: str):
+            layout = QVBoxLayout()
+            toasty = QDialog()
+            layout.addWidget(QLabel(issue))
+            toasty.setLayout(layout)
+            toasty.exec()
+            self.wgSubmitButton.setText("Continuar")
+        
         filter = self.wgSearchFilter._input.text()
         uf = self.wgPickUpLocation._inputUf.currentText()
-        if uf == "": return print("Selecione uma UF")
+        if uf == "": return warn_issue("Selecione uma UF")
             
         city = self.wgPickUpLocation._inputCity.currentText()
-        if city == "": print("Selecione uma cidade")
+        if city == "": warn_issue("Selecione uma cidade")
             
         period = self.wgBidPeriod._input.currentText()
-        if period == "": return print("Selecione um período de lance")
+        if period == "": return warn_issue("Selecione um período de lance")
         period = self.storage.periods[city][period].start_date
 
         values_range = self.wgValuesRange._input.currentText()
-        if values_range == "": return print("Selecione uma faixa de valor")
+        if values_range == "": return warn_issue("Selecione uma faixa de valor")
         values_range = self.storage.values_range[values_range]
+        
+        self.wgSubmitButton.setText("Carregando")
         query = BidQueryModel(filter,uf,self.storage.cities[uf][city].code,period,values_range)
         result = self.requester.submit_query(query)
+        if len(result) == 0:
+            return warn_issue("Nenhum resultado encontrado")
+        self.wgSubmitButton.setText("Continuar")
         dialog = ResultWindow(result)
         dialog.exec()
     

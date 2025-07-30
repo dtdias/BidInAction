@@ -7,8 +7,8 @@ class BidQueryModel:
     uf: str
     city: int
     period: str
-    min_value: float
-    max_value: float
+    min_value: Optional[float] = None
+    max_value: Optional[float] = None
     page: int
     quantity_per_page: int
     def __init__(self, 
@@ -27,5 +27,11 @@ class BidQueryModel:
         self.quantity_per_page = quantity_per_page
 
     def toUrl(self):
-        result = f"codigoDaCidade={self.city}&dataInicioLance={self.period}&pagina={self.page}&quantidadeDeItens={self.quantity_per_page}"
-        return result + f"&valorMaximoVenda={self.max_value}&valorMinimoVenda={self.min_value}&numeroDoLoteOuContrato={self.filter}"
+        result = f"codigoDaCidade={self.city}&dataInicioLance={self.period}&pagina={self.page}&quantidadeDeItens={self.quantity_per_page}&numeroDoLoteOuContrato={self.filter}"
+        if self.max_value != None:
+            result += f"&valorMaximoVenda={self.max_value}"
+            
+        if self.min_value != None:
+            result += f"&valorMaximoVenda={self.min_value}"
+
+        return result
