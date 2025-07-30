@@ -1,6 +1,6 @@
 from models.bid_model import BidModel
 import requests
-from PySide6.QtWidgets import (QWidget, QPushButton, QLabel, QDialog, QScrollArea, QHBoxLayout, QVBoxLayout)
+from PySide6.QtWidgets import (QPushButton, QLabel, QDialog, QHBoxLayout, QVBoxLayout)
 from PySide6.QtCore import (Qt, QSize,QMargins, )
 from PySide6.QtGui import (QFont, QPixmap)
 
@@ -64,15 +64,15 @@ class BidDetails(QDialog):
             hbox.addStretch()
             right_layout.addLayout(hbox)
 
-        button_layout = QHBoxLayout()
-        btn_dar_lance = QPushButton("Como dar seu lance")
-        btn_edital = QPushButton("Baixar Edital")
-        btn_catalogo = QPushButton("Baixar Catálogo")
-        button_layout.addWidget(btn_dar_lance)
-        button_layout.addWidget(btn_edital)
-        button_layout.addWidget(btn_catalogo)
+        # button_layout = QHBoxLayout()
+        # btn_dar_lance = QPushButton("Como dar seu lance")
+        # btn_edital = QPushButton("Baixar Edital")
+        # btn_catalogo = QPushButton("Baixar Catálogo")
+        # button_layout.addWidget(btn_dar_lance)
+        # button_layout.addWidget(btn_edital)
+        # button_layout.addWidget(btn_catalogo)
 
-        right_layout.addLayout(button_layout)
+        # right_layout.addLayout(button_layout)
         main_layout.addLayout(right_layout)
 
     def loadImageFromUrl(self, label: QLabel, url: str):
