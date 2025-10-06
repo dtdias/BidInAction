@@ -25,4 +25,12 @@ Você precisará instalar as bibliotecas do **requiriments.txt** utilizando o co
 
 ```bash
 git clone https://github.com/dtdias/BidInAction
+```
+### 2. Entrar na pasta do projeto
+```bash
 cd BidInAction
+```
+### 3. Executar
+```bash
+para executar no VSCODE apertar F5
+```
