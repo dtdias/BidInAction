@@ -30,7 +30,9 @@ git clone https://github.com/dtdias/BidInAction
 ```bash
 cd BidInAction
 ```
-### 3. Executar
+### 3. Executar 
 ```bash
-para executar no VSCODE apertar F5
+python main.py
+
+### Ou apertar F5 pelo VSCODE
 ```
