@@ -10,7 +10,7 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 * **Filtro Inteligente:** Aplica filtros automáticos para exibir apenas leilões classificados como Joias.
 * **Extração de Dados:** Extrai informações cruciais de cada leilão (data, local, número, etc.).
 
-* **Link de Download:**
+* **Link de Download do Executavel:**
   ```bash
   https://drive.google.com/file/d/19P0J6tyhz50FXrvJBKBzC92TTRQl7tQC/view?usp=drive_link
   ``` 
