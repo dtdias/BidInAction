@@ -7,6 +7,7 @@ class StorageService:
     cities: dict[str, dict[str,CityModel]] = {}
     periods: dict[str, dict[str,BidPeriodModel]] = {}
     values_range = {
+        "Todos": {"min": 0},
         "Abaixo de R$ 500,00": {"min": 0, "max": 500},
         "De R$ 500,01 à R$ 1.000,00": {"min": 500.01, "max": 1000},
         "De R$ 1.000,01 à R$ 1.500,00": {"min": 1000.01, "max": 1500},

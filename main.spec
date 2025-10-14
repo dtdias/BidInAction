@@ -1,11 +1,10 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('icon/caixa-logo.ico', 'icon')],
+    datas=[('icon/caixa-logo.ico', 'icon'),('assets/logo_vitrine_de_joias.png', 'assets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

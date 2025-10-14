@@ -3,7 +3,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 from views.search_window import SearchWindow
 
-def resource_path(rel_path: str) -> str:
+def Resource_path(rel_path: str) -> str:
     # Suporta execução normal e empacotado via PyInstaller
     if hasattr(sys, "_MEIPASS"):
         base_path = sys._MEIPASS
@@ -13,7 +13,7 @@ def resource_path(rel_path: str) -> str:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    icon_path = resource_path("icon/app_Caixa.ico")
+    icon_path = Resource_path("icon/app_Caixa.ico")
     app.setWindowIcon(QIcon(icon_path))
 
     window = SearchWindow()
