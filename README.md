@@ -25,7 +25,10 @@ Siga estas instruções para configurar e rodar o projeto localmente.
 ### Pré-requisitos
 
 Você precisará ter o **Python 3.x** e o **`pip`** (gerenciador de pacotes) instalados no seu sistema.
-Você precisará instalar as bibliotecas do **requirements.txt** utilizando o comando **pip install -r requirements.txt**.
+Você precisará instalar as bibliotecas do **requirements.txt** utilizando o comando abaixo
+```bash 
+pip install -r requirements.txt
+```
 
 ### 1. Clonagem do Repositório
 
