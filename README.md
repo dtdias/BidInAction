@@ -12,7 +12,7 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 * **Extração de Dados:** Extrai informações cruciais de cada leilão (data, local, número, etc.).
 
 * **Download do Setup:**
-[Download](https://drive.google.com/file/d/19P0J6tyhz50FXrvJBKBzC92TTRQl7tQC/view?usp=drive_link)
+[Download](https://drive.google.com/file/d/1DWoghRX0SprMguCYPH4KUUejwB9JQ8KX/view?usp=sharing)
 ---
 
 ## 🚀 Primeiros Passos
