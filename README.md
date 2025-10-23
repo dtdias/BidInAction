@@ -12,7 +12,8 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 * **Extração de Dados:** Extrai informações cruciais de cada leilão (data, local, número, etc.).
 
 * **Download do Setup:**
-[Download](https://drive.google.com/file/d/1DWoghRX0SprMguCYPH4KUUejwB9JQ8KX/view?usp=sharing)
+
+[![Baixar Instalador](https://img.shields.io/badge/Download-Instalador_v1.0.0-blue?style=for-the-badge&logo=windows)](https://drive.google.com/file/d/1DWoghRX0SprMguCYPH4KUUejwB9JQ8KX/view?usp=sharing)
 ---
 
 ## 🚀 Primeiros Passos
