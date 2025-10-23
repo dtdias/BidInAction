@@ -13,7 +13,6 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 
 * **Download do Setup:**
 [Download](https://drive.google.com/file/d/19P0J6tyhz50FXrvJBKBzC92TTRQl7tQC/view?usp=drive_link)
-[Setup](Installer/setup_vitrine_de_joias.exe)
 ---
 
 ## 🚀 Primeiros Passos
