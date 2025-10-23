@@ -1,7 +1,7 @@
 # BidInAction (Vitrine de Joias - Caixa) 
 ## 🎯 Sobre o Projeto
 
-O **BidInAction** é uma ferramenta desenvolvida em Python para automatizar e otimizar a busca por leilões de joias no site oficial de Leilões de Bens da Caixa Econômica Federal.
+O **BidInAction** é uma ferramenta windows desenvolvida em Python para automatizar e otimizar a busca por leilões de joias no site oficial de Leilões de Bens da Caixa Econômica Federal.
 
 Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar apenas nas oportunidades de **Joias e Artigos Preciosos**, esta ferramenta economiza tempo valioso, facilitando a identificação de itens relevantes.
 
@@ -11,12 +11,12 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 * **Filtro Inteligente:** Aplica filtros automáticos para exibir apenas leilões classificados como Joias.
 * **Extração de Dados:** Extrai informações cruciais de cada leilão (data, local, número, etc.).
 
-## ⬇️ Download do Setup:
+## ⬇️ Download do Setup de instalação no Windows:
 
 [![Baixar Instalador](https://img.shields.io/badge/Download-Instalador_v1.0.0-blue?style=for-the-badge&logo=windows)](https://drive.google.com/file/d/1DWoghRX0SprMguCYPH4KUUejwB9JQ8KX/view?usp=sharing)
 ---
 
-## 🚀 Primeiros Passos
+## 🚀 Executar o projeto no Editor (Preferencialmente VSCODE)
 
 Siga estas instruções para configurar e rodar o projeto localmente.
 
