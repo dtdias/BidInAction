@@ -11,11 +11,9 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 * **Filtro Inteligente:** Aplica filtros automáticos para exibir apenas leilões classificados como Joias.
 * **Extração de Dados:** Extrai informações cruciais de cada leilão (data, local, número, etc.).
 
-* **Link de Download do Executavel:**
-  ```bash
-  https://drive.google.com/file/d/19P0J6tyhz50FXrvJBKBzC92TTRQl7tQC/view?usp=drive_link
-  ``` 
-
+* **Download do Setup:**
+[Download](https://drive.google.com/file/d/19P0J6tyhz50FXrvJBKBzC92TTRQl7tQC/view?usp=drive_link)
+[Setup](Installer/setup_vitrine_de_joias.exe)
 ---
 
 ## 🚀 Primeiros Passos
@@ -30,18 +28,28 @@ Você precisará instalar as bibliotecas do **requirements.txt** utilizando o co
 pip install -r requirements.txt
 ```
 
-### 1. Clonagem do Repositório
+#### 1. Clonagem do Repositório
 
 ```bash
 git clone https://github.com/dtdias/BidInAction
 ```
-### 2. Entrar na pasta do projeto
+#### 2. Entrar na pasta do projeto
 ```bash
 cd BidInAction
 ```
-### 3. Executar 
+#### 3. Executar 
 ```bash
 python main.py
 
-### Ou apertar F5 pelo VSCODE
+#### Ou apertar F5 pelo VSCODE
 ```
+---
+### Compilação
+
+* **Compilação do .exe:**
+O executavel foi criado utilizando o Nuitka, segue abaixo o comando utilizado no console para compilar:
+```bash
+python -m nuitka ^    --onefile ^    --windows-console-mode=disable ^    --msvc=latest ^    --enable-plugin=pyside6 ^    --output-filename="Vitrine de Joias - Caixa.exe" ^    --windows-icon-from-ico=icon/caixa-logo.ico ^    --windows-product-name="Vitrine de Joias - Caixa" ^    --windows-company-name="Sua Empresa" ^    --windows-file-version="1.0.0.0" ^    --windows-product-version="1.0.0.0" ^    --windows-file-description="Vitrine de Joias - Caixa" ^    --include-data-file=icon/caixa-logo.ico=icon/caixa-logo.ico ^    --include-data-file=assets/logo_vitrine_de_joias.png=assets/logo_vitrine_de_joias.png ^    main.py
+```
+* **Criação do Setup**
+O setup foi criado utilizando o Inno Setup utilizando [script](script-inno-setup/script-vitrine-caixa.iss)
