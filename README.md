@@ -1,4 +1,5 @@
 # BidInAction (Vitrine de Joias - Caixa) 
+[![English Version]( https://img.shields.io/badge/Translate-English_Version-green)](https://github.com/dtdias/BidInAction/blob/main/ReadmeEnglishVersion.md)
 ## 🎯 Sobre o Projeto
 
 O **BidInAction** é uma ferramenta windows desenvolvida em Python para automatizar e otimizar a busca por leilões de joias no site oficial de Leilões de Bens da Caixa Econômica Federal.
