@@ -4,3 +4,5 @@ build
 dist
 main.dist
 nuitka-crash-report.xml
+/graphify-out
+AGENTS.md
