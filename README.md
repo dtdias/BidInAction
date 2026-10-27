@@ -1,4 +1,7 @@
 # BidInAction (Vitrine de Joias - Caixa) 
+
+![BidInAction: busca de leilões de joias Caixa, com filtros por UF, cidade e faixa de valor. Encontre joias. Filtre oportunidades.](assets/readme-hero.svg)
+
 [![English Version]( https://img.shields.io/badge/Translate-English_Version-green)](https://github.com/dtdias/BidInAction/blob/main/ReadmeEnglishVersion.md)
 ## 🎯 Sobre o Projeto
 
