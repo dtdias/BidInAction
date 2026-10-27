@@ -14,7 +14,7 @@ Se o seu interesse é filtrar rapidamente o vasto catálogo de leilões e focar 
 
 ## ⬇️ Download do Setup de instalação no Windows:
 
-[![Baixar Instalador](https://img.shields.io/badge/Download-Instalador_v1.0.0-blue?style=for-the-badge&logo=windows)](https://drive.usercontent.google.com/u/0/uc?id=1VMk0bx-3N0VeGbsYxZcyR15vjY-vn-eS&export=download)
+[![Baixar Instalador](https://img.shields.io/badge/Download-Instalador_v2.0.0-blue?style=for-the-badge&logo=windows)](https://raw.githubusercontent.com/dtdias/BidInAction/main/Installer/setup_vitrine_de_joias.exe)
 ---
 
 ## 🚀 Executar o projeto no Editor (Preferencialmente VSCODE)

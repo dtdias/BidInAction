@@ -14,7 +14,7 @@ If your goal is to quickly filter the vast auction catalog and focus only on opp
 
 ## ⬇️ Windows Installer Download
 
-[![Download Installer](https://img.shields.io/badge/Download-Installer_v1.0.0-blue?style=for-the-badge&logo=windows)](https://drive.usercontent.google.com/u/0/uc?id=1VMk0bx-3N0VeGbsYxZcyR15vjY-vn-eS&export=download)
+[![Download Installer](https://img.shields.io/badge/Download-Installer_v2.0.0-blue?style=for-the-badge&logo=windows)](https://raw.githubusercontent.com/dtdias/BidInAction/main/Installer/setup_vitrine_de_joias.exe)
 
 ---
 
