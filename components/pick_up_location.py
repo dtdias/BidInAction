@@ -5,12 +5,15 @@ class PickUpLocation():
     def __init__(self, parent: QVBoxLayout, font: Optional[QFont] = None):
         self._row = QHBoxLayout()
         self._label = QLabel( u"Local de retirada*")
+        self._label.setObjectName("fieldLabel")
         
         self._inputUf = QComboBox(placeholderText="UF")
+        self._inputUf.setObjectName("ufInput")
         self._inputUf.setToolTip("UF")
         
         self._inputCity = QComboBox(placeholderText="Cidade")
-        self._inputUf.setToolTip("Cidade")
+        self._inputCity.setObjectName("cityInput")
+        self._inputCity.setToolTip("Cidade")
         
         self._row.addWidget(self._inputUf)
         self._row.addWidget(self._inputCity)

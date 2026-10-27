@@ -3,7 +3,7 @@ from services.request_service import RequesterService
 from models.bid_query_model import BidQueryModel
 
 class SearchWorker(QObject):
-    finished = Signal(list)   # será emitido com a lista de resultados
+    finished = Signal(object)
     failed = Signal(str)      # será emitido com a mensagem de erro
 
     def __init__(self, query: BidQueryModel):
@@ -14,7 +14,7 @@ class SearchWorker(QObject):
     @Slot()
     def run(self):
         try:
-            results = self.requester.submit_query(self.query)
+            results = self.requester.request_lots(self.query)
             self.finished.emit(results)
         except Exception as e:
             self.failed.emit(str(e))

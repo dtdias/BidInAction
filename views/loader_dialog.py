@@ -1,51 +1,54 @@
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QProgressBar, QHBoxLayout
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDialog, QFrame, QLabel, QProgressBar, QVBoxLayout
+
 
 class LoaderDialog(QDialog):
     def __init__(self, text="Carregando...", parent=None):
         super().__init__(parent)
+        self.setObjectName("loaderDialog")
         self.setModal(True)
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
         self.setWindowFlag(Qt.WindowCloseButtonHint, False)
         self.setWindowTitle("Aguarde")
-        
+        self.setMinimumSize(420, 190)
+
+        card = QFrame()
+        card.setObjectName("loadingCard")
+        card_layout = QVBoxLayout(card)
+        card_layout.setContentsMargins(28, 26, 28, 26)
+        card_layout.setSpacing(12)
+
+        title = QLabel("Buscando lotes")
+        title.setObjectName("loaderTitle")
+        card_layout.addWidget(title)
+
+        message = QLabel(text)
+        message.setObjectName("loaderText")
+        message.setWordWrap(True)
+        card_layout.addWidget(message)
+
+        self.bar = QProgressBar()
+        self.bar.setRange(0, 0)
+        self.bar.setTextVisible(False)
+        card_layout.addWidget(self.bar)
+
+        self.percent_lbl = QLabel("Conectando...")
+        self.percent_lbl.setObjectName("loaderText")
+        self.percent_lbl.setAlignment(Qt.AlignmentFlag.AlignRight)
+        card_layout.addWidget(self.percent_lbl)
+
         layout = QVBoxLayout(self)
-        lbl = QLabel(text, self)
-        lbl.setAlignment(Qt.AlignCenter)
-        
-        # Container horizontal para barra + percentual
-        bar_row = QHBoxLayout()
-        self.bar = QProgressBar(self)
-        self.bar.setRange(0, 100)  # determinístico
-        self.bar.setValue(0)
-        
-        self.percent_lbl = QLabel("0%", self)
-        self.percent_lbl.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.percent_lbl.setMinimumWidth(45)
-        
-        bar_row.addWidget(self.bar)
-        bar_row.addWidget(self.percent_lbl)
-        
-        layout.addWidget(lbl)
-        layout.addLayout(bar_row)
-        self.setFixedSize(320, 140)
-        
-        # Timer para simular progresso
-        self._timer = QTimer(self)
-        self._timer.timeout.connect(self._tick)
-        self._timer.start(80)  # atualiza a cada 80ms
-    
-    def _tick(self):
-        v = self.bar.value()
-        if v < 90:  # para em 90% até terminar de verdade
-            self.set_progress(v + 1)
-    
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(card)
+
     def set_progress(self, value: int):
-        v = max(0, min(100, int(value)))
-        self.bar.setValue(v)
-        self.percent_lbl.setText(f"{v}%")
-    
+        if self.bar.maximum() == 0:
+            self.bar.setRange(0, 100)
+        bounded_value = max(0, min(100, int(value)))
+        self.bar.setValue(bounded_value)
+        self.percent_lbl.setText(f"{bounded_value}%")
+
     def stop_and_fill(self):
-        """Para o timer e completa a barra em 100%"""
-        self._timer.stop()
+        """Complete progress before closing the dialog."""
+        self.bar.setRange(0, 100)
         self.set_progress(100)

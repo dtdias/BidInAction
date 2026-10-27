@@ -5,6 +5,7 @@ from PySide6.QtGui import QFont
 class Title():
     def __init__(self, parent: QVBoxLayout, font: Optional[QFont] = None):
         self._label = QLabel(u"FILTROS")
+        self._label.setObjectName("sectionTitle")
         if font != None:
             self._label.setFont(font)
         parent.addWidget(self._label)
